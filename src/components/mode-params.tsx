@@ -132,6 +132,9 @@ export function ModeParamsForm({ mode, value, onChange }: ModeParamsFormProps) {
               {(() => {
                 const bw = value.bit_width ?? 25
                 const so = value.stepover ?? 12
+                if (bw <= 0 || so < 0) return (
+                  <p className="text-xs text-destructive">Bit width must be &gt; 0 and stepover cannot be negative</p>
+                )
                 if (so > bw) return (
                   <p className="text-xs text-destructive">Stepover exceeds bit width — surface won&apos;t be fully covered</p>
                 )
