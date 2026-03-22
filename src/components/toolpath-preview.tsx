@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react'
 import { parseGcode } from '@/lib/gcode/parser'
+import type { Mode } from '@/lib/gcode'
 
 const PAD = 24 // SVG padding in px
 const W = 600
@@ -9,9 +10,11 @@ const H = 400
 
 interface ToolpathPreviewProps {
   gcode: string
+  mode?: Mode
+  modeParams?: Record<string, any>
 }
 
-export function ToolpathPreview({ gcode }: ToolpathPreviewProps) {
+export function ToolpathPreview({ gcode, mode, modeParams }: ToolpathPreviewProps) {
   const { segments, bounds } = useMemo(() => parseGcode(gcode), [gcode])
 
   if (!gcode || segments.length === 0) {
@@ -89,14 +92,30 @@ export function ToolpathPreview({ gcode }: ToolpathPreviewProps) {
         ))}
 
         {/* Cutting moves */}
-        {cuts.map((s, i) => (
-          <line key={`cut${i}`}
-            x1={tx(s.x1)} y1={ty(s.y1)} x2={tx(s.x2)} y2={ty(s.y2)}
-            className="stroke-primary"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-        ))}
+        {mode === 'surfacing' && (modeParams?.bit_width ?? 0) > 0
+          ? cuts.map((s, i) => {
+              const bwPx = (modeParams?.bit_width ?? 0) * scale
+              const isHoriz = Math.abs(s.y2 - s.y1) < 0.001
+              if (isHoriz) {
+                const x = Math.min(tx(s.x1), tx(s.x2))
+                const w = Math.abs(tx(s.x2) - tx(s.x1))
+                return <rect key={`cut${i}`} x={x} y={ty(s.y1) - bwPx / 2} width={w} height={bwPx}
+                  fill="hsl(10 80% 55%)" fillOpacity={0.45} stroke="none" />
+              }
+              const y = Math.min(ty(s.y1), ty(s.y2))
+              const h = Math.abs(ty(s.y2) - ty(s.y1))
+              return <rect key={`cut${i}`} x={tx(s.x1) - bwPx / 2} y={y} width={bwPx} height={h}
+                fill="hsl(10 80% 55%)" fillOpacity={0.45} stroke="none" />
+            })
+          : cuts.map((s, i) => (
+              <line key={`cut${i}`}
+                x1={tx(s.x1)} y1={ty(s.y1)} x2={tx(s.x2)} y2={ty(s.y2)}
+                className="stroke-primary"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+              />
+            ))
+        }
 
         {/* Origin dot */}
         <circle cx={tx(0)} cy={ty(0)} r="3" className="fill-primary/50" />
