@@ -106,6 +106,26 @@ export default function Home() {
           </TabsContent>
         </Tabs>
       </main>
+
+      <footer className="border-t mt-12">
+        <div className="container mx-auto px-4 py-4 max-w-5xl flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+          <span>
+            Made by{' '}
+            <a href="https://federicovezzoli.com" target="_blank" rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground transition-colors">
+              Federico Vezzoli
+            </a>
+          </span>
+          <span>·</span>
+          <span>
+            Forked from{' '}
+            <a href="https://github.com/vector76/gcode_tpgen" target="_blank" rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground transition-colors">
+              vector76/gcode_tpgen
+            </a>
+          </span>
+        </div>
+      </footer>
     </div>
   )
 }
