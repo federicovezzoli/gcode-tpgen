@@ -64,12 +64,9 @@ export default function Home() {
             <div>
               <h1 className="text-xl font-bold tracking-tight">G-Code Test Pattern Generator</h1>
               <p className="text-sm text-muted-foreground mt-0.5">
-                Generate diagnostic G-code patterns for CNC machine calibration
+                Generate diagnostic G-code patterns for CNC machine calibration & more
               </p>
             </div>
-            <Button onClick={handleGenerate} size="default">
-              Generate G-Code
-            </Button>
           </div>
         </div>
       </header>
