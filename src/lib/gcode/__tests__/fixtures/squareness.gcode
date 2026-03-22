@@ -1,0 +1,30 @@
+; mode: squareness
+; rapid feedrate: 2000 mm/min
+; raise/lower feedrate: 800 mm/min
+; pen down z level: -0.5
+; pen up z level: 0.5
+; drawing feedrate: 1000 mm/min
+; x extent: 100
+; y extent: 100
+G0 Z0.5 F800
+G0 X0 Y10 F2000
+G1 Z-0.5 F800
+G1 X0 Y0 F1000
+G1 X10 Y0 F1000
+G0 Z0.5 F800
+G0 X90 Y0 F2000
+G1 Z-0.5 F800
+G1 X100 Y0 F1000
+G1 X100 Y10 F1000
+G0 Z0.5 F800
+G0 X100 Y90 F2000
+G1 Z-0.5 F800
+G1 X100 Y100 F1000
+G1 X90 Y100 F1000
+G0 Z0.5 F800
+G0 X10 Y100 F2000
+G1 Z-0.5 F800
+G1 X0 Y100 F1000
+G1 X0 Y90 F1000
+G0 Z0.5 F800
+G0 X0 Y0 F2000

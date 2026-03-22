@@ -1,0 +1,36 @@
+; mode: hog
+; rapid feedrate: 2000 mm/min
+; raise/lower feedrate: 800 mm/min
+; z height of cut: -0.5
+; clearance z height: 0.5
+; cutting feedrate: 1000 mm/min
+; slotting feedrate: 200 mm/min
+; stepover: 12 mm
+; orientation: X
+; feedrate 1000 mm/min, stepover 12.000 mm, volumetric 6000 mm3 per sec
+; top hat with stock to leave
+G0 Z0.5 F800
+G0 X0.000 Y0.200 F2000
+G1 Z-0.5 F800
+G1 X15.000 Y0.200 F200
+G1 X15.000 Y12.200 F200
+G1 X45.000 Y12.200 F200
+G1 X45.000 Y0.200 F200
+G1 X60.000 Y0.200 F200
+G0 Z0.5 F800
+; top hat finishing
+G0 Z0.5 F800
+G0 X0.000 Y0.000 F2000
+G1 Z-0.5 F800
+G1 X15.000 Y0.000 F200
+G1 X15.000 Y12.000 F200
+G1 X45.000 Y12.000 F200
+G1 X45.000 Y0.000 F200
+G1 X60.000 Y0.000 F200
+G0 Z0.5 F800
+; full speed cut
+G0 Z0.5 F800
+G0 X0.000 Y0.000 F2000
+G1 Z-0.5 F800
+G1 X60.000 Y0.000 F1000
+G0 Z0.5 F800
