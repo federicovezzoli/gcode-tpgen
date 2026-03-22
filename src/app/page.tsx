@@ -124,6 +124,8 @@ export default function Home() {
               vector76/gcode_tpgen
             </a>
           </span>
+          <span>·</span>
+          <span>v{process.env.NEXT_PUBLIC_APP_VERSION}</span>
         </div>
       </footer>
     </div>
