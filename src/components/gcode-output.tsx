@@ -34,8 +34,8 @@ export function GcodeOutput({ gcode, filename }: GcodeOutputProps) {
   }
 
   return (
-    <Card className="flex flex-col h-full">
-      <CardHeader className="pb-3 shrink-0">
+    <Card>
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <CardTitle className="text-sm font-medium">G-Code Output</CardTitle>
           {gcode && (
@@ -54,15 +54,15 @@ export function GcodeOutput({ gcode, filename }: GcodeOutputProps) {
           <p className="text-xs text-muted-foreground font-mono">{filename}</p>
         )}
       </CardHeader>
-      <CardContent className="flex-1 min-h-0 p-0 pb-4 px-4">
+      <CardContent className="p-0 pb-4 px-4">
         {gcode ? (
-          <ScrollArea className="h-full rounded-md border bg-muted/30">
+          <ScrollArea className="h-96 rounded-md border bg-muted/30">
             <pre className="p-4 text-xs font-mono leading-relaxed text-foreground whitespace-pre">
               {gcode}
             </pre>
           </ScrollArea>
         ) : (
-          <div className="h-full flex items-center justify-center rounded-md border border-dashed text-muted-foreground text-sm">
+          <div className="h-24 flex items-center justify-center rounded-md border border-dashed text-muted-foreground text-sm">
             Select a mode and click Generate
           </div>
         )}

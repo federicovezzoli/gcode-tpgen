@@ -82,7 +82,7 @@ export function ModeParamsForm({ mode, value, onChange }: ModeParamsFormProps) {
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium">Mode Parameters</CardTitle>
+        <CardTitle className="text-md font-bold">Mode Parameters</CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
         {(mode === 'perim' || mode === 'squareness') && (

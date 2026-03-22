@@ -42,7 +42,7 @@ export function UniversalParamsForm({ value, onChange }: UniversalParamsFormProp
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium">Universal Parameters</CardTitle>
+        <CardTitle className="text-md font-bold">Universal Parameters</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center gap-2">

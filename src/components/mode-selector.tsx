@@ -41,7 +41,7 @@ export function ModeSelector({ value, onChange }: ModeSelectorProps) {
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-sm font-medium">Test Mode</CardTitle>
+        <CardTitle className="text-md font-bold">Test Mode</CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
         {groups.map(group => (

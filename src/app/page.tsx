@@ -6,6 +6,7 @@ import { ModeSelector } from '@/components/mode-selector'
 import { UniversalParamsForm } from '@/components/universal-params'
 import { ModeParamsForm } from '@/components/mode-params'
 import { GcodeOutput } from '@/components/gcode-output'
+import { ModeDescription } from '@/components/mode-description'
 import { Button } from '@/components/ui/button'
 
 const DEFAULT_UNIVERSAL: UniversalParams = {
@@ -59,35 +60,34 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b">
-        <div className="container mx-auto px-4 py-4 max-w-7xl">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-xl font-bold tracking-tight">G-Code Test Pattern Generator</h1>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                Generate diagnostic G-code patterns for CNC machine calibration & more
-              </p>
-            </div>
-          </div>
+        <div className="container mx-auto px-4 py-4 max-w-5xl">
+          <h1 className="text-xl font-bold tracking-tight">G-Code Test Pattern Generator</h1>
+          <p className="text-sm text-muted-foreground mt-0.5">
+            Generate diagnostic G-code patterns for CNC machine calibration
+          </p>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-6 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-6 h-[calc(100vh-140px)]">
-          {/* Left panel: controls */}
-          <div className="flex flex-col gap-4 overflow-y-auto pr-1">
-            <ModeSelector value={mode} onChange={setMode} />
-            <UniversalParamsForm value={universal} onChange={setUniversal} />
-            <ModeParamsForm mode={mode} value={modeParams} onChange={handleModeParamsChange} />
-            <Button onClick={handleGenerate} className="w-full" size="lg">
-              Generate G-Code
-            </Button>
-          </div>
+      <main className="container mx-auto px-4 py-6 max-w-5xl space-y-4">
+        {/* 1. Mode selector — full width */}
+        <ModeSelector value={mode} onChange={setMode} />
 
-          {/* Right panel: output */}
-          <div className="min-h-0">
-            <GcodeOutput gcode={gcode} filename={filename} />
-          </div>
+        {/* 2. Mode description */}
+        <ModeDescription mode={mode} />
+
+        {/* 3. Parameters — two columns on md+ */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <UniversalParamsForm value={universal} onChange={setUniversal} />
+          <ModeParamsForm mode={mode} value={modeParams} onChange={handleModeParamsChange} />
         </div>
+
+        {/* 4. Generate button */}
+        <Button onClick={handleGenerate} className="w-full" size="lg">
+          Generate G-Code
+        </Button>
+
+        {/* 5. Output */}
+        <GcodeOutput gcode={gcode} filename={filename} />
       </main>
     </div>
   )
