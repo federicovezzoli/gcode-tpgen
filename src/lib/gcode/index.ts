@@ -54,7 +54,7 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
     out += '; stepover: ' + p.stepover + ' mm\n'
     out += '; direction: ' + p.direction + '\n'
     out += '; perimeter: ' + p.perimeter + '\n'
-    out += '; passes: ' + (p.passes ?? 1) + '\n'
+    if ((p.passes ?? 1) > 1) out += '; passes: ' + p.passes + '\n'
   }
 
   if (mode === 'hog') {

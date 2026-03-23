@@ -117,13 +117,8 @@ export function generateSurfacing(
   const dir = direction.toUpperCase()
   let out = ''
 
-  for (let pass = 1; pass <= passes; pass++) {
-    const zd = ' Z' + (pen_d * pass).toFixed(3)
-
-    if (pass > 1) {
-      out += `; --- Pass ${pass} of ${passes} ---\n`
-    }
-
+  if (passes <= 1) {
+    const zd = ' Z' + pen_d
     if (perimeter) {
       out += surfacing_perim(xsize, ysize, stepover, dir, zu, zd, rapid, vertical, drawspeed)
       if (dir === 'E' || dir === 'W') {
@@ -134,11 +129,29 @@ export function generateSurfacing(
     } else {
       out += surfacing(0, 0, xsize, ysize, stepover, dir, zu, zd, rapid, vertical, drawspeed)
     }
+  } else {
+    for (let pass = 1; pass <= passes; pass++) {
+      const zd = ' Z' + (pen_d * pass).toFixed(3)
 
-    if (pass < passes) {
-      out += `G0${zu} F${vertical}\n`
-      out += `G0 X0 Y0 F${rapid}\n`
-      out += `M0 ; Pass ${pass} of ${passes} complete — press cycle start to continue\n`
+      if (pass > 1) {
+        out += `; --- Pass ${pass} of ${passes} ---\n`
+      }
+
+      if (perimeter) {
+        out += surfacing_perim(xsize, ysize, stepover, dir, zu, zd, rapid, vertical, drawspeed)
+        if (dir === 'E' || dir === 'W') {
+          out += surfacing(0, 2 * stepover, xsize, ysize - 2 * stepover, stepover, dir, zu, zd, rapid, vertical, drawspeed)
+        } else {
+          out += surfacing(2 * stepover, 0, xsize - 2 * stepover, ysize, stepover, dir, zu, zd, rapid, vertical, drawspeed)
+        }
+      } else {
+        out += surfacing(0, 0, xsize, ysize, stepover, dir, zu, zd, rapid, vertical, drawspeed)
+      }
+
+      if (pass < passes) {
+        out += `G0${zu} F${vertical}\n`
+        out += `M0 ; Pass ${pass} of ${passes} complete - press cycle start to continue\n`
+      }
     }
   }
 
