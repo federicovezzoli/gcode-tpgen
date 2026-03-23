@@ -1,3 +1,11 @@
+# [1.5.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.4.0...v1.5.0) (2026-03-23)
+
+
+### Features
+
+* update license in package-lock.json and enhance ModeParamsForm with xsize and ysize props ([94584cd](https://github.com/federicovezzoli/gcode-tpgen/commit/94584cdec255a0256613afc2239b861fb52bbbe9))
+* update metadata for G-Code Patterns Generator with enhanced descriptions and keywords ([be541e8](https://github.com/federicovezzoli/gcode-tpgen/commit/be541e846590e245997a0f7895047f7b3f54a73a))
+
 # [1.4.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.3.0...v1.4.0) (2026-03-22)
 
 
