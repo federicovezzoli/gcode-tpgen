@@ -1,3 +1,13 @@
+# [1.6.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.5.0...v1.6.0) (2026-03-24)
+
+
+### Features
+
+* Add multipass support to surfacing generator ([b50e17f](https://github.com/federicovezzoli/gcode-tpgen/commit/b50e17ffd74a52d3226e32d4d2c4dd9b8e1d76e0))
+* add passes parameter to surfacing functionality and update related components ([0748ed4](https://github.com/federicovezzoli/gcode-tpgen/commit/0748ed4a306f9c8058cbfde8ff309711ced0430a))
+* Enhance stroke merging logic and improve rendering of cuts in ToolpathPreview ([e9bc253](https://github.com/federicovezzoli/gcode-tpgen/commit/e9bc253cf4075455350f62a767e7f5457c35d247))
+* Refactor passes handling in ToolpathPreview and Gcode generation for improved safety and clarity ([4524eac](https://github.com/federicovezzoli/gcode-tpgen/commit/4524eacaae73d91c3a65d647eb2a905f8d42441e))
+
 # [1.5.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.4.0...v1.5.0) (2026-03-23)
 
 
