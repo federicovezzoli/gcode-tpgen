@@ -70,6 +70,7 @@ describe('surfacing', () => {
   it('N no perimeter', () => expect(generateGcode('surfacing', BASE, { stepover: 12, direction: 'N', perimeter: false })).toBe(fixture('surfacing_N')))
   it('W no perimeter', () => expect(generateGcode('surfacing', BASE, { stepover: 12, direction: 'W', perimeter: false })).toBe(fixture('surfacing_W')))
   it('E with perimeter', () => expect(generateGcode('surfacing', BASE, { stepover: 12, direction: 'E', perimeter: true })).toBe(fixture('surfacing_perim')))
+  it('3-pass multipass', () => expect(generateGcode('surfacing', BASE, { stepover: 12, direction: 'E', perimeter: false, passes: 3 })).toBe(fixture('surfacing_multipass')))
 })
 
 describe('hog', () => {
