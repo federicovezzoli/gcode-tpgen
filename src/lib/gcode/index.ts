@@ -54,7 +54,9 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
     out += '; stepover: ' + p.stepover + ' mm\n'
     out += '; direction: ' + p.direction + '\n'
     out += '; perimeter: ' + p.perimeter + '\n'
-    if ((p.passes ?? 1) > 1) out += '; passes: ' + p.passes + '\n'
+    const rawPasses = p.passes
+    const passes = typeof rawPasses === 'number' && Number.isFinite(rawPasses) ? Math.max(1, Math.floor(rawPasses)) : 1
+    if (passes > 1) out += '; passes: ' + passes + '\n'
   }
 
   if (mode === 'hog') {
@@ -109,7 +111,9 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
   }
 
   if (mode === 'surfacing') {
-    out += generateSurfacing(p.stepover, p.direction, p.perimeter, p.passes ?? 1, universal)
+    const rawP = p.passes
+    const safePasses = typeof rawP === 'number' && Number.isFinite(rawP) ? Math.max(1, Math.floor(rawP)) : 1
+    out += generateSurfacing(p.stepover, p.direction, p.perimeter, safePasses, universal)
   }
 
   if (mode === 'hog') {

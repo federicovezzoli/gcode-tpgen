@@ -39,7 +39,8 @@ interface ToolpathPreviewProps {
 }
 
 export function ToolpathPreview({ gcode, mode, modeParams }: ToolpathPreviewProps) {
-  const passes = mode === 'surfacing' ? (modeParams?.passes ?? 1) : 1
+  const rawPasses = mode === 'surfacing' ? modeParams?.passes : 1
+  const passes = typeof rawPasses === 'number' && Number.isFinite(rawPasses) ? Math.max(1, Math.floor(rawPasses)) : 1
   const gcodeForPreview = useMemo(() => {
     if (passes <= 1) return gcode
     const m0 = gcode.indexOf('\nM0')
