@@ -209,15 +209,18 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
               })()}
             </div>
             <div className="space-y-1">
-            <NumField
-              label="Passes"
-              name="passes"
-              value={value.passes ?? 1}
-              step="1"
-              min={1}
-              onChange={(k, v) => set(k, Math.min(50, Math.max(1, Math.round(v))))}
-            />
-            <p className="text-xs text-muted-foreground">Multiple passes can help with very uneven stock or hard materials. The machine will pause (M0) between passes so you can inspect the surface or vacuum chips before continuing.</p>
+              <NumField
+                label="Passes"
+                name="passes"
+                value={value.passes ?? 1}
+                step="1"
+                min={1}
+                onChange={(k, v) => set(k, Math.min(50, Math.max(1, Math.round(v))))}
+              />
+              <p className="text-xs text-muted-foreground">
+                Multiple passes can help with very uneven stock or hard materials. The machine will pause (M0) between
+                passes so you can inspect the surface or vacuum chips before continuing.
+              </p>
             </div>
             <DirSelect name="direction" value={value.direction ?? 'E'} onChange={set} />
             <CheckField
