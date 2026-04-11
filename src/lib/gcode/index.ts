@@ -1,12 +1,12 @@
-import { Mode, UniversalParams, ModeParams } from './types'
-import { generateRuler } from './generators/ruler'
-import { generateSquareness } from './generators/perimeter'
-import { generateZTestCorners, generateZTestGrid } from './generators/ztest'
-import { generateDenseSegments } from './generators/dense'
 import { generateAccel } from './generators/accel'
-import { generateText } from './generators/text'
-import { generateSurfacing } from './generators/surfacing'
+import { generateDenseSegments } from './generators/dense'
 import { generateHog } from './generators/hog'
+import { generateSquareness } from './generators/perimeter'
+import { generateRuler } from './generators/ruler'
+import { generateSurfacing } from './generators/surfacing'
+import { generateText } from './generators/text'
+import { generateZTestCorners, generateZTestGrid } from './generators/ztest'
+import type { Mode, ModeParams, UniversalParams } from './types'
 import { fmt, timestamp, zeroRefToCoords } from './utils'
 
 export function generateGcode(mode: Mode, universal: UniversalParams, modeParams: ModeParams): string {
@@ -118,7 +118,15 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
   }
 
   if (mode === 'hog') {
-    out += generateHog(p.orientation, p.hog_count, p.hog_offset, p.final_feedrate, p.final_stepover, p.stepover ?? 1, universal)
+    out += generateHog(
+      p.orientation,
+      p.hog_count,
+      p.hog_offset,
+      p.final_feedrate,
+      p.final_stepover,
+      p.stepover ?? 1,
+      universal,
+    )
   }
 
   return out

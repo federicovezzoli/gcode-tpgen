@@ -1,16 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { Mode, UniversalParams, generateGcode, getFilename } from '@/lib/gcode'
-import { ModeSelector } from '@/components/mode-selector'
-import { UniversalParamsForm } from '@/components/universal-params'
-import { ModeParamsForm } from '@/components/mode-params'
 import { GcodeOutput } from '@/components/gcode-output'
 import { ModeDescription } from '@/components/mode-description'
+import { ModeParamsForm } from '@/components/mode-params'
+import { ModeSelector } from '@/components/mode-selector'
+import { ThemeToggle } from '@/components/theme-toggle'
 import { ToolpathPreview } from '@/components/toolpath-preview'
 import { Button } from '@/components/ui/button'
-import { ThemeToggle } from '@/components/theme-toggle'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { UniversalParamsForm } from '@/components/universal-params'
+import { generateGcode, getFilename, type Mode, type UniversalParams } from '@/lib/gcode'
 
 const DEFAULT_UNIVERSAL: UniversalParams = {
   zero: false,
@@ -51,7 +51,7 @@ export default function Home() {
   const modeParams = modeParamsMap[mode] ?? {}
 
   function handleModeParamsChange(params: Record<string, any>) {
-    setModeParamsMap(prev => ({ ...prev, [mode]: params }))
+    setModeParamsMap((prev) => ({ ...prev, [mode]: params }))
   }
 
   function handleGenerate() {
@@ -85,7 +85,13 @@ export default function Home() {
         {/* 3. Parameters — two columns on md+ */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <UniversalParamsForm value={universal} onChange={setUniversal} />
-          <ModeParamsForm mode={mode} value={modeParams} onChange={handleModeParamsChange} xsize={universal.xsize} ysize={universal.ysize} />
+          <ModeParamsForm
+            mode={mode}
+            value={modeParams}
+            onChange={handleModeParamsChange}
+            xsize={universal.xsize}
+            ysize={universal.ysize}
+          />
         </div>
 
         {/* 4. Generate button */}
@@ -112,16 +118,24 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4 max-w-5xl flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
           <span>
             Made by{' '}
-            <a href="https://federicovezzoli.com" target="_blank" rel="noopener noreferrer"
-              className="underline underline-offset-2 hover:text-foreground transition-colors">
+            <a
+              href="https://federicovezzoli.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground transition-colors"
+            >
               Federico Vezzoli
             </a>
           </span>
           <span>·</span>
           <span>
             Forked from{' '}
-            <a href="https://github.com/vector76/gcode_tpgen" target="_blank" rel="noopener noreferrer"
-              className="underline underline-offset-2 hover:text-foreground transition-colors">
+            <a
+              href="https://github.com/vector76/gcode_tpgen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground transition-colors"
+            >
               vector76/gcode_tpgen
             </a>
           </span>
