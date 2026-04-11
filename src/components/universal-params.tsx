@@ -64,17 +64,18 @@ const ZERO_REF_GRID: { ref: ZeroRef; label: string }[][] = [
 
 function ZeroRefGrid({ value, onChange }: { value: ZeroRef; onChange: (ref: ZeroRef) => void }) {
   return (
-    <div className="space-y-1.5">
-      <Label className="text-xs text-muted-foreground">Workpiece zero reference point</Label>
+    <fieldset className="space-y-1.5 border-0 p-0 m-0">
+      <legend className="text-xs text-muted-foreground mb-1.5">Workpiece zero reference point</legend>
       <div className="inline-grid grid-cols-3 gap-1 border rounded p-1">
         {ZERO_REF_GRID.map((row) =>
           row.map(({ ref, label }) => (
             <button
               key={ref}
               type="button"
+              aria-pressed={value === ref}
               onClick={() => onChange(ref)}
               className={[
-                'h-8 px-2 rounded text-xs transition-colors',
+                'h-8 px-2 rounded text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                 value === ref
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-muted text-muted-foreground hover:bg-muted/70',
@@ -85,7 +86,7 @@ function ZeroRefGrid({ value, onChange }: { value: ZeroRef; onChange: (ref: Zero
           )),
         )}
       </div>
-    </div>
+    </fieldset>
   )
 }
 

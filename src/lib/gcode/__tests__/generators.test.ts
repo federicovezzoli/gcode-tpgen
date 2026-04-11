@@ -138,4 +138,17 @@ describe('zero flag', () => {
     expect(generateGcode('x', { ...BASE, zero: true, zero_ref: 'bottom-left' }, {})).toBe(fixture('x_zero')))
   it('middle-center -> G92 X50 Y50', () =>
     expect(generateGcode('x', { ...BASE, zero: true, zero_ref: 'middle-center' }, {})).toBe(fixture('x_zero_center')))
+
+  it.each([
+    ['bottom-left', 'G92 X0 Y0 Z0'],
+    ['bottom-center', 'G92 X50 Y0 Z0'],
+    ['bottom-right', 'G92 X100 Y0 Z0'],
+    ['middle-left', 'G92 X0 Y50 Z0'],
+    ['middle-center', 'G92 X50 Y50 Z0'],
+    ['middle-right', 'G92 X100 Y50 Z0'],
+    ['top-left', 'G92 X0 Y100 Z0'],
+    ['top-center', 'G92 X50 Y100 Z0'],
+    ['top-right', 'G92 X100 Y100 Z0'],
+  ] as const)('zero_ref %s emits %s', (zero_ref, expected) =>
+    expect(generateGcode('x', { ...BASE, zero: true, zero_ref }, {})).toContain(expected))
 })

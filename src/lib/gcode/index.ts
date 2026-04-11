@@ -7,7 +7,7 @@ import { generateSurfacing } from './generators/surfacing'
 import { generateText } from './generators/text'
 import { generateZTestCorners, generateZTestGrid } from './generators/ztest'
 import type { Mode, ModeParams, UniversalParams } from './types'
-import { fmt, timestamp, zeroRefToCoords } from './utils'
+import { fmtCoord, timestamp, zeroRefToCoords } from './utils'
 
 export function generateGcode(mode: Mode, universal: UniversalParams, modeParams: ModeParams): string {
   const { pen_d, pen_u, rapid, vertical, drawspeed, drawspeed_slow, xsize, ysize, zero } = universal
@@ -67,7 +67,7 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
 
   if (zero) {
     const [rx, ry] = zeroRefToCoords(universal.zero_ref ?? 'bottom-left', xsize, ysize)
-    out += `G92 X${fmt(rx)} Y${fmt(ry)} Z0\n`
+    out += `G92 X${fmtCoord(rx)} Y${fmtCoord(ry)} Z0\n`
   }
 
   // Mode dispatch — matches exactly the original generate() function
