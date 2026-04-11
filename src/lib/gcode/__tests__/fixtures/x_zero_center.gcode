@@ -6,7 +6,7 @@
 ; drawing feedrate: 1000 mm/min
 ; x extent: 100
 ; y extent: 100
-G92 X0.000 Y0.000 Z0
+G92 X50.000 Y50.000 Z0
 G0 X0 Y0 Z0.5 F2000
 G1 X0 Y0 Z-0.5 F800
 G1 X0 Y9.5 Z-0.5 F1000

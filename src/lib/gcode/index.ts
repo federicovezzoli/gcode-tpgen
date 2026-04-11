@@ -7,7 +7,7 @@ import { generateAccel } from './generators/accel'
 import { generateText } from './generators/text'
 import { generateSurfacing } from './generators/surfacing'
 import { generateHog } from './generators/hog'
-import { timestamp } from './utils'
+import { fmt, timestamp, zeroRefToCoords } from './utils'
 
 export function generateGcode(mode: Mode, universal: UniversalParams, modeParams: ModeParams): string {
   const { pen_d, pen_u, rapid, vertical, drawspeed, drawspeed_slow, xsize, ysize, zero } = universal
@@ -66,12 +66,8 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
   }
 
   if (zero) {
-    const ref = universal.zero_ref ?? 'bottom-left'
-    const col = ref.endsWith('left') ? 0 : ref.endsWith('right') ? 2 : 1
-    const row = ref.startsWith('bottom') ? 0 : ref.startsWith('middle') ? 1 : 2
-    const rx = (col / 2) * xsize
-    const ry = (row / 2) * ysize
-    out += `G92 X${rx} Y${ry} Z0\n`
+    const [rx, ry] = zeroRefToCoords(universal.zero_ref ?? 'bottom-left', xsize, ysize)
+    out += `G92 X${fmt(rx)} Y${fmt(ry)} Z0\n`
   }
 
   // Mode dispatch — matches exactly the original generate() function

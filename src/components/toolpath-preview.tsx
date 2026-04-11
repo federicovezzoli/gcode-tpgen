@@ -2,7 +2,8 @@
 
 import { useMemo } from 'react'
 import { parseGcode, type Segment } from '@/lib/gcode/parser'
-import type { Mode, SurfacingParams, UniversalParams, ZeroRef } from '@/lib/gcode'
+import { zeroRefToCoords } from '@/lib/gcode/utils'
+import type { Mode, SurfacingParams, UniversalParams } from '@/lib/gcode'
 
 // Merge consecutive collinear connected segments into single strokes
 function mergeStrokes(segments: Segment[]): Segment[] {
@@ -32,12 +33,6 @@ const PAD = 24 // SVG padding in px
 const W = 600
 const H = 400
 
-function zeroRefOrigin(ref: ZeroRef | undefined, xsize: number, ysize: number): [number, number] {
-  if (!ref) return [0, 0]
-  const col = ref.endsWith('left') ? 0 : ref.endsWith('right') ? 2 : 1
-  const row = ref.startsWith('bottom') ? 0 : ref.startsWith('middle') ? 1 : 2
-  return [(col / 2) * xsize, (row / 2) * ysize]
-}
 
 interface ToolpathPreviewProps {
   gcode: string
@@ -161,9 +156,11 @@ export function ToolpathPreview({ gcode, mode, modeParams, universal }: Toolpath
             ))
         }
 
-        {/* G92 origin marker */}
-        {(() => {
-          const [ox, oy] = zeroRefOrigin(universal?.zero_ref, universal?.xsize ?? 0, universal?.ysize ?? 0)
+        {/* G92 origin marker — only when G92 is enabled */}
+        {universal?.zero && (() => {
+          const [ox, oy] = zeroRefToCoords(universal.zero_ref ?? 'bottom-left', universal.xsize, universal.ysize)
+          // hide if the origin falls outside the visible toolpath bounds
+          if (ox < minX - 0.1 || ox > maxX + 0.1 || oy < minY - 0.1 || oy > maxY + 0.1) return null
           return (
             <g>
               <circle cx={tx(ox)} cy={ty(oy)} r="4" className="fill-primary" opacity={0.7} />

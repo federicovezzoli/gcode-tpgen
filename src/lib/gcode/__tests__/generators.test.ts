@@ -86,5 +86,6 @@ describe('hog', () => {
 })
 
 describe('zero flag', () => {
-  it('adds G92', () => expect(generateGcode('x', { ...BASE, zero: true }, {})).toBe(fixture('x_zero')))
+  it('bottom-left (default)', () => expect(generateGcode('x', { ...BASE, zero: true, zero_ref: 'bottom-left' }, {})).toBe(fixture('x_zero')))
+  it('middle-center -> G92 X50 Y50', () => expect(generateGcode('x', { ...BASE, zero: true, zero_ref: 'middle-center' }, {})).toBe(fixture('x_zero_center')))
 })
