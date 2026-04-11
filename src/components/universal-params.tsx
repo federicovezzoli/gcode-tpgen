@@ -1,10 +1,10 @@
 'use client'
 
-import { UniversalParams } from '@/lib/gcode'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Checkbox } from '@/components/ui/checkbox'
+import type { UniversalParams, ZeroRef } from '@/lib/gcode'
 
 interface UniversalParamsFormProps {
   value: UniversalParams
@@ -35,6 +35,54 @@ function NumField({
   )
 }
 
+const ZERO_REF_GRID: { ref: ZeroRef; label: string }[][] = [
+  [
+    { ref: 'top-left',      label: 'Top left'      },
+    { ref: 'top-center',    label: 'Top center'    },
+    { ref: 'top-right',     label: 'Top right'     },
+  ],
+  [
+    { ref: 'middle-left',   label: 'Middle left'   },
+    { ref: 'middle-center', label: 'Middle center' },
+    { ref: 'middle-right',  label: 'Middle right'  },
+  ],
+  [
+    { ref: 'bottom-left',   label: 'Bottom left'   },
+    { ref: 'bottom-center', label: 'Bottom center' },
+    { ref: 'bottom-right',  label: 'Bottom right'  },
+  ],
+]
+
+function ZeroRefGrid({ value, onChange }: {
+  value: ZeroRef
+  onChange: (ref: ZeroRef) => void
+}) {
+  return (
+    <div className="space-y-1.5">
+      <Label className="text-xs text-muted-foreground">Workpiece zero reference point</Label>
+      <div className="inline-grid grid-cols-3 gap-1 border rounded p-1">
+        {ZERO_REF_GRID.map((row) =>
+          row.map(({ ref, label }) => (
+            <button
+              key={ref}
+              type="button"
+              onClick={() => onChange(ref)}
+              className={[
+                'h-8 px-2 rounded text-xs transition-colors',
+                value === ref
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/70',
+              ].join(' ')}
+            >
+              {label}
+            </button>
+          ))
+        )}
+      </div>
+    </div>
+  )
+}
+
 export function UniversalParamsForm({ value, onChange }: UniversalParamsFormProps) {
   const set = (k: keyof UniversalParams, v: number | boolean) =>
     onChange({ ...value, [k]: v })
@@ -45,15 +93,23 @@ export function UniversalParamsForm({ value, onChange }: UniversalParamsFormProp
         <CardTitle className="text-md font-bold">Universal Parameters</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="flex items-center gap-2">
-          <Checkbox
-            id="zero"
-            checked={value.zero}
-            onCheckedChange={v => set('zero', !!v)}
-          />
-          <Label htmlFor="zero" className="text-xs cursor-pointer">
-            Enable G92 (set current position as origin)
-          </Label>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="zero"
+              checked={value.zero}
+              onCheckedChange={v => set('zero', !!v)}
+            />
+            <Label htmlFor="zero" className="text-xs cursor-pointer">
+              Enable G92 (set current position as origin)
+            </Label>
+          </div>
+          {value.zero && (
+            <ZeroRefGrid
+              value={value.zero_ref ?? 'bottom-left'}
+              onChange={ref => onChange({ ...value, zero_ref: ref })}
+            />
+          )}
         </div>
 
         <div>

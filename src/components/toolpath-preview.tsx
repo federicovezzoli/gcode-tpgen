@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { parseGcode, type Segment } from '@/lib/gcode/parser'
-import type { Mode, SurfacingParams } from '@/lib/gcode'
+import type { Mode, SurfacingParams, UniversalParams, ZeroRef } from '@/lib/gcode'
 
 // Merge consecutive collinear connected segments into single strokes
 function mergeStrokes(segments: Segment[]): Segment[] {
@@ -32,13 +32,21 @@ const PAD = 24 // SVG padding in px
 const W = 600
 const H = 400
 
+function zeroRefOrigin(ref: ZeroRef | undefined, xsize: number, ysize: number): [number, number] {
+  if (!ref) return [0, 0]
+  const col = ref.endsWith('left') ? 0 : ref.endsWith('right') ? 2 : 1
+  const row = ref.startsWith('bottom') ? 0 : ref.startsWith('middle') ? 1 : 2
+  return [(col / 2) * xsize, (row / 2) * ysize]
+}
+
 interface ToolpathPreviewProps {
   gcode: string
   mode?: Mode
   modeParams?: Partial<SurfacingParams> & Record<string, unknown>
+  universal?: UniversalParams
 }
 
-export function ToolpathPreview({ gcode, mode, modeParams }: ToolpathPreviewProps) {
+export function ToolpathPreview({ gcode, mode, modeParams, universal }: ToolpathPreviewProps) {
   const rawPasses = mode === 'surfacing' ? modeParams?.passes : 1
   const passes = typeof rawPasses === 'number' && Number.isFinite(rawPasses) ? Math.max(1, Math.floor(rawPasses)) : 1
   const gcodeForPreview = useMemo(() => {
@@ -153,8 +161,16 @@ export function ToolpathPreview({ gcode, mode, modeParams }: ToolpathPreviewProp
             ))
         }
 
-        {/* Origin dot */}
-        <circle cx={tx(0)} cy={ty(0)} r="3" className="fill-primary/50" />
+        {/* G92 origin marker */}
+        {(() => {
+          const [ox, oy] = zeroRefOrigin(universal?.zero_ref, universal?.xsize ?? 0, universal?.ysize ?? 0)
+          return (
+            <g>
+              <circle cx={tx(ox)} cy={ty(oy)} r="4" className="fill-primary" opacity={0.7} />
+              <text x={tx(ox) + 6} y={ty(oy) + 4} fontSize="9" className="fill-primary" opacity={0.9}>G92</text>
+            </g>
+          )
+        })()}
 
         {/* Dimension labels */}
         <text x={W / 2} y={H - 4} textAnchor="middle"

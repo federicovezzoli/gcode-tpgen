@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const DEFAULT_UNIVERSAL: UniversalParams = {
   zero: false,
+  zero_ref: 'bottom-left',
   pen_d: -0.5,
   pen_u: 0.5,
   rapid: 2000,
@@ -99,7 +100,7 @@ export default function Home() {
             <TabsTrigger value="gcode">G-Code</TabsTrigger>
           </TabsList>
           <TabsContent value="preview" className="mt-3">
-            <ToolpathPreview gcode={gcode} mode={mode} modeParams={modeParams} />
+            <ToolpathPreview gcode={gcode} mode={mode} modeParams={modeParams} universal={universal} />
           </TabsContent>
           <TabsContent value="gcode" className="mt-3">
             <GcodeOutput gcode={gcode} filename={filename} />

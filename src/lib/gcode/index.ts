@@ -66,7 +66,12 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
   }
 
   if (zero) {
-    out += 'G92 X0 Y0 Z0\n'
+    const ref = universal.zero_ref ?? 'bottom-left'
+    const col = ref.endsWith('left') ? 0 : ref.endsWith('right') ? 2 : 1
+    const row = ref.startsWith('bottom') ? 0 : ref.startsWith('middle') ? 1 : 2
+    const rx = (col / 2) * xsize
+    const ry = (row / 2) * ysize
+    out += `G92 X${rx} Y${ry} Z0\n`
   }
 
   // Mode dispatch — matches exactly the original generate() function
