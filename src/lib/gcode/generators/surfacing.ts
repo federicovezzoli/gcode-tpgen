@@ -183,9 +183,8 @@ export function generateSurfacing(
     for (let pass = 1; pass <= passes; pass++) {
       const zd = ' Z' + (pen_d * pass).toFixed(3)
 
-      if (pass > 1) {
-        out += `; --- Pass ${pass} of ${passes} ---\n`
-      }
+      // Label every pass for clarity in the G-code file.
+      out += `; --- Pass ${pass} of ${passes} ---\n`
 
       if (perimeter) {
         out += surfacing_perim(xsize, ysize, stepover, dir, zu, zd, rapid, vertical, drawspeed)
@@ -222,9 +221,10 @@ export function generateSurfacing(
         out += surfacing(0, 0, xsize, ysize, stepover, dir, zu, zd, rapid, vertical, drawspeed)
       }
 
+      // After each pass except the last: pause execution so the operator can
+      // inspect the surface, vacuum chips, or adjust Z before continuing.
       if (pass < passes) {
-        out += `G0${zu} F${vertical}\n`
-        out += `M0 ; Pass ${pass} of ${passes} complete - press cycle start to continue\n`
+        out += `M0 ; Pass ${pass} of ${passes} complete - vacuum chips and check depth if needed\n`
       }
     }
   }

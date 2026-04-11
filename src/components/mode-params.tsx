@@ -217,7 +217,7 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
               min={1}
               onChange={(k, v) => set(k, Math.min(50, Math.max(1, Math.round(v))))}
             />
-            <p className="text-xs text-muted-foreground">Multiple passes can help with very uneven stock or hard materials, the script will idle between passes so you can confirm additional passes only when needed.</p>
+            <p className="text-xs text-muted-foreground">Multiple passes can help with very uneven stock or hard materials. The machine will pause (M0) between passes so you can inspect the surface or vacuum chips before continuing.</p>
             </div>
             <DirSelect name="direction" value={value.direction ?? 'E'} onChange={set} />
             <CheckField
