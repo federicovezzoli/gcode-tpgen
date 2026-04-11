@@ -176,7 +176,7 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
 
         {mode === 'surfacing' && (
           <>
-            <NumField label="Bit Width" name="bit_width" value={value.bit_width ?? 25} unit="mm" onChange={set} />
+            <NumField label="Bit Width" name="bit_width" value={value.bit_width ?? 35} unit="mm" onChange={set} />
             <div className="space-y-1">
               <NumField
                 label="Stepover"
@@ -186,8 +186,8 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
                 onChange={(k, v) => set(k, Math.max(0.1, v))}
               />
               {(() => {
-                const bw = value.bit_width ?? 25
-                const so = value.stepover ?? 12
+                const bw = value.bit_width ?? 35
+                const so = value.stepover ?? 20
                 if (bw <= 0 || so <= 0)
                   return <p className="text-xs text-destructive">Bit width and stepover must be &gt; 0</p>
                 const dir = value.direction ?? 'E'
@@ -208,6 +208,7 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
                 )
               })()}
             </div>
+            <div className="space-y-1">
             <NumField
               label="Passes"
               name="passes"
@@ -216,6 +217,8 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
               min={1}
               onChange={(k, v) => set(k, Math.min(50, Math.max(1, Math.round(v))))}
             />
+            <p className="text-xs text-muted-foreground">Multiple passes can help with very uneven stock or hard materials, the script will idle between passes so you can confirm additional passes only when needed.</p>
+            </div>
             <DirSelect name="direction" value={value.direction ?? 'E'} onChange={set} />
             <CheckField
               label="Include perimeter pass"
