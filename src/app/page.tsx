@@ -12,7 +12,8 @@ import { Button } from '@/components/ui/button'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-const DEFAULT_UNIVERSAL: UniversalParams = {
+// Base feedrate defaults for drawing/diagnostic modes
+const BASE_UNIVERSAL: UniversalParams = {
   zero: false,
   pen_d: -0.5,
   pen_u: 0.5,
@@ -22,6 +23,16 @@ const DEFAULT_UNIVERSAL: UniversalParams = {
   drawspeed_slow: 200,
   xsize: 100,
   ysize: 100,
+}
+
+// Per-mode feedrate overrides (applied on mode switch)
+const MODE_FEEDRATE_DEFAULTS: Partial<Record<Mode, Partial<UniversalParams>>> = {
+  surfacing: { vertical: 300, drawspeed: 600, pen_u: 10 },  // 5000 µm/s plunge, 10000 µm/s feedrate, 10mm clearance
+}
+
+const DEFAULT_UNIVERSAL: UniversalParams = {
+  ...BASE_UNIVERSAL,
+  ...(MODE_FEEDRATE_DEFAULTS['surfacing'] ?? {}),  // surfacing is the default mode
 }
 
 const DEFAULT_MODE_PARAMS: Record<string, Record<string, any>> = {
@@ -36,18 +47,27 @@ const DEFAULT_MODE_PARAMS: Record<string, Record<string, any>> = {
   accel_x: { accel_low: 100, accel_high: 1000, accel_tests: 10 },
   accel_y: { accel_low: 100, accel_high: 1000, accel_tests: 10 },
   text: { text_input: '' },
-  surfacing: { stepover: 12, direction: 'E', perimeter: false, bit_width: 25, passes: 1 },
+  surfacing: { stepover: 12, direction: 'E', perimeter: false, bit_width: 35, passes: 1 },
   hog: { orientation: 'X', hog_count: 1, hog_offset: 10, final_feedrate: 1000, final_stepover: 3 },
 }
 
 export default function Home() {
-  const [mode, setMode] = useState<Mode>('xy')
+  const [mode, setMode] = useState<Mode>('surfacing')
   const [universal, setUniversal] = useState<UniversalParams>(DEFAULT_UNIVERSAL)
   const [modeParamsMap, setModeParamsMap] = useState(DEFAULT_MODE_PARAMS)
   const [gcode, setGcode] = useState('')
   const [filename, setFilename] = useState('')
 
   const modeParams = modeParamsMap[mode] ?? {}
+
+  function handleModeChange(newMode: Mode) {
+    setMode(newMode)
+    const feedrateDefaults = MODE_FEEDRATE_DEFAULTS[newMode]
+    setUniversal(prev => ({
+      ...prev,
+      ...(feedrateDefaults ?? { vertical: BASE_UNIVERSAL.vertical, drawspeed: BASE_UNIVERSAL.drawspeed }),
+    }))
+  }
 
   function handleModeParamsChange(params: Record<string, any>) {
     setModeParamsMap(prev => ({ ...prev, [mode]: params }))
@@ -76,14 +96,14 @@ export default function Home() {
 
       <main className="container mx-auto px-4 py-6 max-w-5xl space-y-4">
         {/* 1. Mode selector — full width */}
-        <ModeSelector value={mode} onChange={setMode} />
+        <ModeSelector value={mode} onChange={handleModeChange} />
 
         {/* 2. Mode description */}
         <ModeDescription mode={mode} />
 
         {/* 3. Parameters — two columns on md+ */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <UniversalParamsForm value={universal} onChange={setUniversal} />
+          <UniversalParamsForm value={universal} onChange={setUniversal} mode={mode} />
           <ModeParamsForm mode={mode} value={modeParams} onChange={handleModeParamsChange} xsize={universal.xsize} ysize={universal.ysize} />
         </div>
 

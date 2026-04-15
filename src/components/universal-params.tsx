@@ -1,6 +1,6 @@
 'use client'
 
-import { UniversalParams } from '@/lib/gcode'
+import { Mode, UniversalParams } from '@/lib/gcode'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 interface UniversalParamsFormProps {
   value: UniversalParams
   onChange: (params: UniversalParams) => void
+  mode?: Mode
 }
 
 function NumField({
@@ -35,9 +36,12 @@ function NumField({
   )
 }
 
-export function UniversalParamsForm({ value, onChange }: UniversalParamsFormProps) {
+export function UniversalParamsForm({ value, onChange, mode }: UniversalParamsFormProps) {
   const set = (k: keyof UniversalParams, v: number | boolean) =>
     onChange({ ...value, [k]: v })
+
+  const isSurfacing = mode === 'surfacing'
+  const isHog = mode === 'hog'
 
   return (
     <Card>
@@ -67,8 +71,8 @@ export function UniversalParamsForm({ value, onChange }: UniversalParamsFormProp
         <div>
           <p className="text-xs text-muted-foreground mb-2 font-medium uppercase tracking-wide">Z Levels</p>
           <div className="grid grid-cols-2 gap-3">
-            <NumField label="Pen Down" name="pen_d" value={value.pen_d} unit="mm" onChange={set} />
-            <NumField label="Pen Up" name="pen_u" value={value.pen_u} unit="mm" onChange={set} />
+            <NumField label={isSurfacing || isHog ? 'Cut Depth' : 'Pen Down'} name="pen_d" value={value.pen_d} unit="mm" onChange={set} />
+            <NumField label={isSurfacing || isHog ? 'Clearance' : 'Pen Up'} name="pen_u" value={value.pen_u} unit="mm" onChange={set} />
           </div>
         </div>
 
@@ -76,9 +80,11 @@ export function UniversalParamsForm({ value, onChange }: UniversalParamsFormProp
           <p className="text-xs text-muted-foreground mb-2 font-medium uppercase tracking-wide">Feedrates</p>
           <div className="grid grid-cols-2 gap-3">
             <NumField label="Rapid" name="rapid" value={value.rapid} unit="mm/min" onChange={set} />
-            <NumField label="Vertical" name="vertical" value={value.vertical} unit="mm/min" onChange={set} />
-            <NumField label="Draw" name="drawspeed" value={value.drawspeed} unit="mm/min" onChange={set} />
-            <NumField label="Draw (slow)" name="drawspeed_slow" value={value.drawspeed_slow} unit="mm/min" onChange={set} />
+            <NumField label={isSurfacing || isHog ? 'Plunge Rate' : 'Vertical'} name="vertical" value={value.vertical} unit="mm/min" onChange={set} />
+            <NumField label={isSurfacing || isHog ? 'Feedrate' : 'Draw'} name="drawspeed" value={value.drawspeed} unit="mm/min" onChange={set} />
+            {!isSurfacing && (
+              <NumField label={isHog ? 'Slotting Feedrate' : 'Draw (slow)'} name="drawspeed_slow" value={value.drawspeed_slow} unit="mm/min" onChange={set} />
+            )}
           </div>
         </div>
       </CardContent>
