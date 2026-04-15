@@ -1,11 +1,10 @@
 'use client'
 
-import { Mode, UniversalParams } from '@/lib/gcode'
+import { type Mode, type UniversalParams, type ZeroRef } from '@/lib/gcode'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import type { UniversalParams, ZeroRef } from '@/lib/gcode'
 
 interface UniversalParamsFormProps {
   value: UniversalParams
@@ -46,9 +45,6 @@ function NumField({
   )
 }
 
-export function UniversalParamsForm({ value, onChange, mode }: UniversalParamsFormProps) {
-  const set = (k: keyof UniversalParams, v: number | boolean) =>
-    onChange({ ...value, [k]: v })
 const ZERO_REF_GRID: { ref: ZeroRef; label: string }[][] = [
   [
     { ref: 'top-left', label: 'Top left' },
@@ -95,8 +91,9 @@ function ZeroRefGrid({ value, onChange }: { value: ZeroRef; onChange: (ref: Zero
   )
 }
 
-export function UniversalParamsForm({ value, onChange }: UniversalParamsFormProps) {
-  const set = (k: keyof UniversalParams, v: number | boolean) => onChange({ ...value, [k]: v })
+export function UniversalParamsForm({ value, onChange, mode }: UniversalParamsFormProps) {
+  const set = (k: keyof UniversalParams, v: number | boolean) =>
+    onChange({ ...value, [k]: v })
 
   const isSurfacing = mode === 'surfacing'
   const isHog = mode === 'hog'
@@ -147,15 +144,6 @@ export function UniversalParamsForm({ value, onChange }: UniversalParamsFormProp
             {!isSurfacing && (
               <NumField label={isHog ? 'Slotting Feedrate' : 'Draw (slow)'} name="drawspeed_slow" value={value.drawspeed_slow} unit="mm/min" onChange={set} />
             )}
-            <NumField label="Vertical" name="vertical" value={value.vertical} unit="mm/min" onChange={set} />
-            <NumField label="Draw" name="drawspeed" value={value.drawspeed} unit="mm/min" onChange={set} />
-            <NumField
-              label="Draw (slow)"
-              name="drawspeed_slow"
-              value={value.drawspeed_slow}
-              unit="mm/min"
-              onChange={set}
-            />
           </div>
         </div>
       </CardContent>

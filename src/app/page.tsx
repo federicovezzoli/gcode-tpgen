@@ -104,7 +104,7 @@ export default function Home() {
 
         {/* 3. Parameters — two columns on md+ */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <UniversalParamsForm value={universal} onChange={setUniversal} />
+          <UniversalParamsForm value={universal} onChange={setUniversal} mode={mode} />
           <ModeParamsForm
             mode={mode}
             value={modeParams}
