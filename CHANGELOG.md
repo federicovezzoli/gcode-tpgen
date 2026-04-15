@@ -1,3 +1,12 @@
+# [1.9.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.8.0...v1.9.0) (2026-04-15)
+
+
+### Features
+
+* Enhance filename generation for surfacing mode and add datestamp utility ([23bb934](https://github.com/federicovezzoli/gcode-tpgen/commit/23bb934ec5344f1ab62e0d9d7d439a8e3d9193aa))
+* Refactor UniversalParamsForm to support mode-specific labels and enhance feedrate handling ([9ee2737](https://github.com/federicovezzoli/gcode-tpgen/commit/9ee27377696621708428b9f414280f57693e7008))
+* Update UniversalParamsForm to accept mode prop for enhanced functionality ([6ca4150](https://github.com/federicovezzoli/gcode-tpgen/commit/6ca415090e605fa2f4509b33cb241944e6f99d38))
+
 # [1.8.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.7.0...v1.8.0) (2026-04-11)
 
 
