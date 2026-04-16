@@ -181,7 +181,7 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
               <NumField
                 label="Stepover"
                 name="stepover"
-                value={value.stepover ?? 12}
+                value={value.stepover ?? 25}
                 unit="mm"
                 onChange={(k, v) => set(k, Math.max(0.1, v))}
               />
@@ -233,7 +233,7 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
                     E: 'Strokes go west→east, stepping top→bottom. Starts at top-left.',
                     W: 'Strokes go east→west, stepping bottom→top. Starts at bottom-right.',
                   }
-                  return info[d] + ' Direction is chosen for climb milling.'
+                  return `${info[d]} Direction is chosen for climb milling.`
                 })()}
               </p>
             </div>
