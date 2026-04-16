@@ -217,11 +217,26 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
                 min={1}
                 onChange={(k, v) => set(k, Math.min(50, Math.max(1, Math.round(v))))}
               />
-              <p className="text-xs text-muted-foreground">
-                Multiple passes can help with very uneven stock or hard materials. The machine will pause (M0) between
-                passes so you can inspect the surface or vacuum chips before continuing.
-              </p>
             </div>
+            {(value.passes ?? 1) > 1 && (
+              <div className="space-y-1">
+                <NumField
+                  label="Pause every N passes"
+                  name="pause_every"
+                  value={value.pause_every ?? 1}
+                  step="1"
+                  min={0}
+                  onChange={(k, v) => set(k, Math.max(0, Math.round(v)))}
+                />
+                <p className="text-xs text-muted-foreground">
+                  {(value.pause_every ?? 1) === 0
+                    ? 'No pauses — all passes run continuously.'
+                    : (value.pause_every ?? 1) === 1
+                      ? 'Machine pauses (M0) after every pass.'
+                      : `Machine pauses (M0) every ${value.pause_every} passes.`}
+                </p>
+              </div>
+            )}
             <div className="space-y-1">
               <DirSelect name="direction" value={value.direction ?? 'E'} onChange={set} />
               <p className="text-xs text-muted-foreground">

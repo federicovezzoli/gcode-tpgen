@@ -114,7 +114,9 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
   if (mode === 'surfacing') {
     const rawP = p.passes
     const safePasses = typeof rawP === 'number' && Number.isFinite(rawP) ? Math.max(1, Math.floor(rawP)) : 1
-    out += generateSurfacing(p.stepover, p.direction, p.perimeter, safePasses, universal)
+    const rawPE = p.pause_every
+    const safePauseEvery = typeof rawPE === 'number' && Number.isFinite(rawPE) ? Math.max(0, Math.floor(rawPE)) : 1
+    out += generateSurfacing(p.stepover, p.direction, p.perimeter, safePasses, safePauseEvery, universal)
   }
 
   if (mode === 'hog') {

@@ -136,6 +136,7 @@ export function generateSurfacing(
   direction: Direction,
   perimeter: boolean,
   passes: number,
+  pauseEvery: number,
   u: UniversalParams,
 ): string {
   const { pen_d, pen_u, rapid, vertical, drawspeed, xsize, ysize } = u
@@ -221,9 +222,8 @@ export function generateSurfacing(
         out += surfacing(0, 0, xsize, ysize, stepover, dir, zu, zd, rapid, vertical, drawspeed)
       }
 
-      // After each pass except the last: pause execution so the operator can
-      // inspect the surface, vacuum chips, or adjust Z before continuing.
-      if (pass < passes) {
+      // Pause after this pass if requested and it's not the last pass.
+      if (pass < passes && pauseEvery > 0 && pass % pauseEvery === 0) {
         out += `M0 ; Pass ${pass} of ${passes} complete - vacuum chips and check depth if needed\n`
       }
     }
