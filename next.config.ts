@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs'
+import { readFileSync } from 'node:fs'
 import type { NextConfig } from 'next'
 
 const { version } = JSON.parse(readFileSync('./package.json', 'utf8'))

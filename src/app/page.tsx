@@ -33,7 +33,7 @@ const MODE_FEEDRATE_DEFAULTS: Partial<Record<Mode, Partial<UniversalParams>>> = 
 
 const DEFAULT_UNIVERSAL: UniversalParams = {
   ...BASE_UNIVERSAL,
-  ...(MODE_FEEDRATE_DEFAULTS['surfacing'] ?? {}), // surfacing is the default mode
+  ...(MODE_FEEDRATE_DEFAULTS.surfacing ?? {}), // surfacing is the default mode
 }
 
 const DEFAULT_MODE_PARAMS: Record<string, Record<string, any>> = {
