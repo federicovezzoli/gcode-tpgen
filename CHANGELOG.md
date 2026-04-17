@@ -1,3 +1,11 @@
+# [1.12.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.11.0...v1.12.0) (2026-04-17)
+
+
+### Features
+
+* add horizontal entry and entry slack parameters for surfacing ([7a0cf2b](https://github.com/federicovezzoli/gcode-tpgen/commit/7a0cf2b362008fe494bdcdafd0d5204b07d5bfe1))
+* implement horizontal entry offset in surfacing and update plunge coordinate formatting ([39af686](https://github.com/federicovezzoli/gcode-tpgen/commit/39af686377f29ad0255cd184fa83ddb6966ba121))
+
 # [1.11.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.10.0...v1.11.0) (2026-04-16)
 
 
