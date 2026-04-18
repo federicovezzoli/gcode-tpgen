@@ -120,6 +120,38 @@ export function ToolpathPreview({ gcode, mode, modeParams, universal }: Toolpath
           strokeWidth="1"
         />
 
+        {/* Stock boundary — drawn when we know the actual stock size (surfacing mode).
+            Especially useful with horizontal_entry: strokes visibly start outside this rect. */}
+        {mode === 'surfacing' &&
+          universal &&
+          (() => {
+            const sx1 = tx(0)
+            const sy1 = ty(universal.ysize)
+            const sw = universal.xsize * scale
+            const sh = universal.ysize * scale
+            // Only draw if the stock rect differs meaningfully from the toolpath bounds
+            // (i.e. the toolpath extends outside the stock)
+            const stockMatchesBounds =
+              Math.abs(sx1 - offsetX) < 2 &&
+              Math.abs(sy1 - offsetY) < 2 &&
+              Math.abs(sw - rangeX * scale) < 2 &&
+              Math.abs(sh - rangeY * scale) < 2
+            if (stockMatchesBounds) return null
+            return (
+              <rect
+                x={sx1}
+                y={sy1}
+                width={sw}
+                height={sh}
+                fill="none"
+                stroke="hsl(45 90% 55%)"
+                strokeWidth="1.5"
+                strokeDasharray="6 3"
+                opacity={0.8}
+              />
+            )
+          })()}
+
         {/* Rapid moves */}
         {rapids.map((s) => (
           <line
@@ -233,6 +265,15 @@ export function ToolpathPreview({ gcode, mode, modeParams, universal }: Toolpath
           <span className="inline-block w-3 h-0.5 bg-muted-foreground/30 rounded mr-1 translate-y-[-1px]" />
           {rapidCount} rapids
         </span>
+        {mode === 'surfacing' && modeParams?.horizontal_entry && (
+          <span>
+            <span
+              className="inline-block w-3 h-0.5 rounded mr-1 translate-y-[-1px]"
+              style={{ background: 'hsl(45 90% 55%)' }}
+            />
+            stock boundary
+          </span>
+        )}
         {passes > 1 && <span className="text-muted-foreground/70 italic">pass 1 of {passes} shown</span>}
         <span className="ml-auto">
           {(maxX - minX).toFixed(1)} × {(maxY - minY).toFixed(1)} mm
