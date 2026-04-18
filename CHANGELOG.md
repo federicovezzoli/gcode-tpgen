@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.12.0...v1.13.0) (2026-04-18)
+
+
+### Features
+
+* add stock boundary visualization for surfacing mode ([0823478](https://github.com/federicovezzoli/gcode-tpgen/commit/08234787edc6ded272ff93cdd0020f4ea2df9888))
+
 # [1.12.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.11.0...v1.12.0) (2026-04-17)
 
 
