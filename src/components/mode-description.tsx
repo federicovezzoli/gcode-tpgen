@@ -175,11 +175,11 @@ const descriptions: Record<string, React.ReactNode> = {
       </p>
       <p className="font-medium">Recommended starting values for wood with 1/8&quot; bit:</p>
       <ul className="list-disc pl-5 space-y-0.5 font-mono text-xs">
-        <li>Z height of cut: −6 mm</li>
+        <li>Z height of cut: −1 mm</li>
         <li>Z clearance: 0.5 mm</li>
         <li>Rapid feedrate: 2000 mm/min</li>
         <li>Raise/lower feedrate: 180 mm/min</li>
-        <li>Cutting feedrate: 600 mm/min</li>
+        <li>Cutting feedrate: 900 mm/min</li>
         <li>Slotting feedrate (slow): 300 mm/min</li>
         <li>Stepover: 1.5 mm</li>
       </ul>

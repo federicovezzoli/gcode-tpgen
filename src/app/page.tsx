@@ -28,7 +28,7 @@ const BASE_UNIVERSAL: UniversalParams = {
 
 // Per-mode feedrate overrides (applied on mode switch)
 const MODE_FEEDRATE_DEFAULTS: Partial<Record<Mode, Partial<UniversalParams>>> = {
-  surfacing: { vertical: 300, drawspeed: 600, pen_u: 10 }, // 5000 µm/s plunge, 10000 µm/s feedrate, 10mm clearance
+  surfacing: { vertical: 300, drawspeed: 900, pen_d: -1, pen_u: 10 }, // 5000 µm/s plunge, 10000 µm/s feedrate, 10mm clearance
 }
 
 const DEFAULT_UNIVERSAL: UniversalParams = {
@@ -48,7 +48,7 @@ const DEFAULT_MODE_PARAMS: Record<string, Record<string, any>> = {
   accel_x: { accel_low: 100, accel_high: 1000, accel_tests: 10 },
   accel_y: { accel_low: 100, accel_high: 1000, accel_tests: 10 },
   text: { text_input: '' },
-  surfacing: { stepover: 20, direction: 'E', perimeter: false, bit_width: 35, passes: 1 },
+  surfacing: { stepover: 27, direction: 'E', perimeter: false, bit_width: 35, passes: 1 },
   hog: { orientation: 'X', hog_count: 1, hog_offset: 10, final_feedrate: 1000, final_stepover: 3 },
 }
 
@@ -58,6 +58,7 @@ export default function Home() {
   const [modeParamsMap, setModeParamsMap] = useState(DEFAULT_MODE_PARAMS)
   const [gcode, setGcode] = useState('')
   const [filename, setFilename] = useState('')
+  const [isDirty, setIsDirty] = useState(false)
 
   const modeParams = modeParamsMap[mode] ?? {}
 
@@ -68,10 +69,17 @@ export default function Home() {
       ...prev,
       ...(feedrateDefaults ?? { vertical: BASE_UNIVERSAL.vertical, drawspeed: BASE_UNIVERSAL.drawspeed }),
     }))
+    setIsDirty(true)
+  }
+
+  function handleUniversalChange(params: UniversalParams) {
+    setUniversal(params)
+    setIsDirty(true)
   }
 
   function handleModeParamsChange(params: Record<string, any>) {
     setModeParamsMap((prev) => ({ ...prev, [mode]: params }))
+    setIsDirty(true)
   }
 
   function handleGenerate() {
@@ -79,6 +87,7 @@ export default function Home() {
     const fname = getFilename(mode, universal, modeParams)
     setGcode(code)
     setFilename(fname)
+    setIsDirty(false)
   }
 
   return (
@@ -104,7 +113,7 @@ export default function Home() {
 
         {/* 3. Parameters — two columns on md+ */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <UniversalParamsForm value={universal} onChange={setUniversal} mode={mode} />
+          <UniversalParamsForm value={universal} onChange={handleUniversalChange} mode={mode} />
           <ModeParamsForm
             mode={mode}
             value={modeParams}
@@ -126,7 +135,7 @@ export default function Home() {
             <TabsTrigger value="gcode">G-Code</TabsTrigger>
           </TabsList>
           <TabsContent value="preview" className="mt-3">
-            <ToolpathPreview gcode={gcode} mode={mode} modeParams={modeParams} universal={universal} />
+            <ToolpathPreview gcode={isDirty ? '' : gcode} mode={mode} modeParams={modeParams} universal={universal} />
           </TabsContent>
           <TabsContent value="gcode" className="mt-3">
             <GcodeOutput gcode={gcode} filename={filename} />
