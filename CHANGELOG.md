@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.14.0...v1.14.1) (2026-04-18)
+
+
+### Bug Fixes
+
+* update surfacing mode drawspeed to 1000 ([ae018d3](https://github.com/federicovezzoli/gcode-tpgen/commit/ae018d3c0f568548fb40fd452990619b1e6fe62f))
+
 # [1.14.0](https://github.com/federicovezzoli/gcode-tpgen/compare/v1.13.0...v1.14.0) (2026-04-18)
 
 
