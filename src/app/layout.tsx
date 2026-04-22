@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import Link from 'next/link'
+import Script from 'next/script'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ThemeToggle } from '@/components/theme-toggle'
 import './globals.css'
@@ -58,6 +59,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        <Script
+          data-goatcounter="https://federicovezzoli.goatcounter.com/count"
+          src="//gc.zgo.at/count.js"
+          strategy="afterInteractive"
+        />
         <ThemeProvider>
           <header className="border-b">
             <div className="container mx-auto px-4 py-4 max-w-5xl flex items-center justify-between">
