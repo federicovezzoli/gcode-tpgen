@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/federicovezzoli/gcode-tools/compare/v1.16.0...v1.17.0) (2026-04-22)
+
+
+### Features
+
+* refactor mode handling and remove text mode support ([047ce8c](https://github.com/federicovezzoli/gcode-tools/commit/047ce8ce9a652c40f8f5352097ed2a1b73f7fff0))
+
 # [1.16.0](https://github.com/federicovezzoli/gcode-tools/compare/v1.15.0...v1.16.0) (2026-04-22)
 
 
