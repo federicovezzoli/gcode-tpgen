@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/federicovezzoli/gcode-tools/compare/v1.17.0...v1.18.0) (2026-04-22)
+
+
+### Features
+
+* add goatcounter script for analytics tracking ([c0619ba](https://github.com/federicovezzoli/gcode-tools/commit/c0619ba91fd7eac6c2e10a04036ee642e7b2db01))
+
 # [1.17.0](https://github.com/federicovezzoli/gcode-tools/compare/v1.16.0...v1.17.0) (2026-04-22)
 
 
