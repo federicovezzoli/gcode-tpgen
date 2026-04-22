@@ -57,12 +57,6 @@ export const MODES: { value: Mode; label: string; group: string; description: st
     description: 'Dense G1 segments to stress-test firmware parsing and communication speed.',
   },
   {
-    value: 'text',
-    label: 'Text',
-    group: 'Advanced',
-    description: 'ASCII text rendered via G5 Bézier curves. Requires firmware support.',
-  },
-  {
     value: 'surfacing',
     label: 'Surfacing',
     group: 'Milling',
@@ -122,7 +116,7 @@ export const GROUPS: Record<string, { description: string; accent: string; text:
     text: 'text-orange-600 dark:text-orange-400',
   },
   Advanced: {
-    description: 'Firmware stress tests: dense G1 segment parsing and G5 Bézier text rendering.',
+    description: 'Firmware stress tests: dense G1 segment parsing speed.',
     accent: 'border-pink-500',
     text: 'text-pink-600 dark:text-pink-400',
   },

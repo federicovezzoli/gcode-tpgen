@@ -106,6 +106,7 @@ export default function RootLayout({
                 aria-label="GitHub repository"
                 className="hover:text-foreground transition-colors"
               >
+                <span className="sr-only">GitHub</span>
                 <svg
                   viewBox="0 0 24 24"
                   aria-hidden="true"

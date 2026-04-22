@@ -9,7 +9,6 @@ export type Mode =
   | 'dense-segments'
   | 'accel-x'
   | 'accel-y'
-  | 'text'
   | 'surfacing'
   | 'hog'
 
@@ -64,10 +63,6 @@ export interface AccelParams {
   accel_tests: number
 }
 
-export interface TextParams {
-  text_input: string
-}
-
 export interface SurfacingParams {
   stepover: number
   direction: Direction
@@ -92,6 +87,5 @@ export type ModeParams =
   | ZTestParams
   | DenseParams
   | AccelParams
-  | TextParams
   | SurfacingParams
   | HogParams

@@ -207,7 +207,6 @@ const MODE_TO_DESC: Record<Mode, keyof typeof descriptions> = {
   'dense-segments': 'dense_segments',
   'accel-x': 'accel',
   'accel-y': 'accel',
-  text: 'text',
   surfacing: 'surfacing',
   hog: 'hog',
 }
@@ -223,7 +222,6 @@ const MODE_TITLES: Record<Mode, string> = {
   'dense-segments': 'Dense Segments',
   'accel-x': 'Acceleration Test',
   'accel-y': 'Acceleration Test',
-  text: 'Text Generation',
   surfacing: 'Spoil Board Surfacing',
   hog: 'Hog-Out Optimization',
 }

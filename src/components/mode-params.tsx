@@ -5,7 +5,6 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import type { Mode } from '@/lib/gcode'
 
 interface ModeParamsFormProps {
@@ -159,18 +158,6 @@ export function ModeParamsForm({ mode, value, onChange, xsize = 100, ysize = 100
               onChange={set}
             />
             <NumField label="Test Count" name="accel_tests" value={value.accel_tests ?? 10} step="1" onChange={set} />
-          </div>
-        )}
-
-        {mode === 'text' && (
-          <div className="space-y-1">
-            <Label className="text-xs">Text to render</Label>
-            <Textarea
-              value={value.text_input ?? ''}
-              onChange={(e) => set('text_input', e.target.value)}
-              placeholder="Enter text (requires G5 Bezier firmware support)"
-              className="text-sm resize-none h-20"
-            />
           </div>
         )}
 

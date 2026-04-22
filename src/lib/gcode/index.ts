@@ -4,7 +4,6 @@ import { generateHog } from './generators/hog'
 import { generateSquareness } from './generators/perimeter'
 import { generateRuler } from './generators/ruler'
 import { generateSurfacing } from './generators/surfacing'
-import { generateText } from './generators/text'
 import { generateZTestCorners, generateZTestGrid } from './generators/ztest'
 import type { Mode, ModeParams, UniversalParams } from './types'
 import { datestamp, fmtCoord, timestamp, zeroRefToCoords } from './utils'
@@ -110,10 +109,6 @@ export function generateGcode(mode: Mode, universal: UniversalParams, modeParams
 
   if (mode === 'accel-y') {
     out += generateAccel('y', p.accel_low, p.accel_high, p.accel_tests, universal)
-  }
-
-  if (mode === 'text') {
-    out += generateText(p.text_input, universal)
   }
 
   if (mode === 'surfacing') {
